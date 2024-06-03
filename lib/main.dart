@@ -25,29 +25,32 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        actions: [
+        actions: const [
+          /*
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () {},
           ),
-          const CircleAvatar(
+          */
+          CircleAvatar(
             backgroundImage: AssetImage('assets/profile.jpg'), // Ensure to add a placeholder image
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Baserah',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
+            /*
             Row(
               children: [
                 ElevatedButton(
@@ -67,9 +70,11 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            const ProgressCard(),
-            const SizedBox(height: 20),
+            */
+            SizedBox(height: 20),
+            //const ProgressCard(),
+            SizedBox(height: 20),
+            /*
             const Text(
               'Categories',
               style: TextStyle(
@@ -77,8 +82,9 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 10),
-            const CategoriesGrid(),
+             */
+            SizedBox(height: 10),
+            CategoriesGrid(),
           ],
         ),
       ),
@@ -88,10 +94,12 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.home),
             label: '',
           ),
+          /*
           BottomNavigationBarItem(
             icon: Icon(Icons.add_circle),
             label: '',
           ),
+           */
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
             label: '',
@@ -101,7 +109,8 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
+// WE CAN REMOVE THIS CLASS
+/*
 class ProgressCard extends StatelessWidget {
   const ProgressCard({super.key});
 
@@ -155,6 +164,8 @@ class ProgressCard extends StatelessWidget {
     );
   }
 }
+*/
+
 
 class CategoriesGrid extends StatelessWidget {
   const CategoriesGrid({super.key});
@@ -168,25 +179,22 @@ class CategoriesGrid extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: const [
-        CategoryCard(
-          title: 'Books',
-          newItems: 5,
-          progress: 9,
-          total: 24,
-          color: Colors.blue,
+        SimpleCategoryCard(
+          title: 'Click Here to See The User Current Location',
+          icon: Icons.not_started_rounded,
         ),
-        CategoryCard(
-          title: 'Emails',
-          newItems: 2,
-          progress: 4,
-          total: 18,
-          color: Colors.orange,
+        SimpleCategoryCard(
+          title: 'Click Here to See The logs history',
+          icon: Icons.book,
         ),
+
       ],
     );
   }
 }
 
+/*
+// WE CAN REMOVE THIS CLASS
 class CategoryCard extends StatelessWidget {
   final String title;
   final int newItems;
@@ -202,6 +210,8 @@ class CategoryCard extends StatelessWidget {
     required this.total,
     required this.color,
   });
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -252,3 +262,49 @@ class CategoryCard extends StatelessWidget {
     );
   }
 }
+*/
+
+class SimpleCategoryCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const SimpleCategoryCard({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.white,
+              child: Icon(icon, size: 24, color: Colors.black),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
