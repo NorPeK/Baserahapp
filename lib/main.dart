@@ -1,3 +1,4 @@
+import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
       title: 'Baserah',
       theme: ThemeData.dark(),
       home: const HomePage(),
+      initialRoute: '/login',
       routes: {
+        '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage(),
         '/profile': (context) => const ProfilePage(),
       },
