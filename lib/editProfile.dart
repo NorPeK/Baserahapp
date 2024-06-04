@@ -8,7 +8,7 @@ class editProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Eddit profile'),
+        title: const Text('Edit profile'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(  // Added SingleChildScrollView
@@ -17,14 +17,14 @@ class editProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Welcome back! Please enter your details.',
+              'You can modify your details here.',
               style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.email),
-                labelText: 'Enter your email or username',
+                labelText: 'User email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -35,8 +35,18 @@ class editProfilePage extends StatelessWidget {
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lock),
-                labelText: 'Password',
-                suffixIcon: const Icon(Icons.visibility_off),
+                labelText: 'Username',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock),
+                labelText: 'User phone number',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

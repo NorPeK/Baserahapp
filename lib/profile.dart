@@ -101,7 +101,7 @@ class ProfileOption extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.color,
-    this.onTap, // Initialize onTap parameter
+    this.onTap, // Initialize onTap parameter gfdg
 
   });
 
