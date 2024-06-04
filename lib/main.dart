@@ -1,5 +1,6 @@
 import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
+import 'package:baserah_app/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage(),
+        '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const ProfilePage(),
       },
 

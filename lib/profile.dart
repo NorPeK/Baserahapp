@@ -7,17 +7,8 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
         title: const Text('Profile'),
-        /*
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-
-         */
+        // Removed the leading property to remove the back arrow
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -45,23 +36,23 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView(
-                children: const [
-                  ProfileOption(
+                children: [
+                  const ProfileOption(
                     icon: Icons.person,
                     title: 'User Details',
                     color: Colors.orange,
                   ),
-                  ProfileOption(
+                  const ProfileOption(
                     icon: Icons.edit,
                     title: 'Edit Profile',
                     color: Colors.purple,
                   ),
-                  ProfileOption(
+                  const ProfileOption(
                     icon: Icons.lock,
                     title: 'Privacy',
                     color: Colors.yellow,
                   ),
-                  ProfileOption(
+                  const ProfileOption(
                     icon: Icons.help,
                     title: 'Help Center',
                     color: Colors.green,
@@ -70,6 +61,9 @@ class ProfilePage extends StatelessWidget {
                     icon: Icons.logout,
                     title: 'Sign Out',
                     color: Colors.red,
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
                   ),
                 ],
               ),
@@ -105,12 +99,15 @@ class ProfileOption extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
+  final VoidCallback? onTap; // Added onTap parameter
 
   const ProfileOption({
     super.key,
     required this.icon,
     required this.title,
     required this.color,
+    this.onTap, // Initialize onTap parameter
+
   });
 
   @override
@@ -121,8 +118,8 @@ class ProfileOption extends StatelessWidget {
         child: Icon(icon, color: Colors.white),
       ),
       title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios),
-      onTap: () {},
+      trailing: const Icon(Icons.arrow_forward_ios),
+      onTap: onTap ?? () {}, // Use onTap if provided, otherwise do nothing
     );
   }
 }
