@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Don't have an account? "),
+                const Text("Don't have an account? "), //test
                 TextButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/signup');
