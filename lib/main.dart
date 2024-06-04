@@ -1,3 +1,4 @@
+import 'package:baserah_app/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'Baserah',
       theme: ThemeData.dark(),
       home: const HomePage(),
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/profile': (context) => const ProfilePage(),
+      },
+
     );
   }
 }
@@ -24,6 +30,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Home'),
         actions: const [
           /*
@@ -92,7 +99,7 @@ class HomePage extends StatelessWidget {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: '',
+            label: 'Home',
           ),
           /*
           BottomNavigationBarItem(
@@ -102,9 +109,16 @@ class HomePage extends StatelessWidget {
            */
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            label: '',
+            label: 'Profile',
           ),
         ],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushNamed(context, '/home');
+          } else if (index == 1) {
+            Navigator.pushNamed(context, '/profile');
+          }
+        },
       ),
     );
   }
