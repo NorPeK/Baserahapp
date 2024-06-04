@@ -1,3 +1,4 @@
+import 'package:baserah_app/editProfile.dart';
 import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
 import 'package:baserah_app/signup.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const ProfilePage(),
+        '/editProfile': (context) => const editProfilePage(),
       },
 
     );

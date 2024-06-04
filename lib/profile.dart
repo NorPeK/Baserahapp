@@ -8,6 +8,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        automaticallyImplyLeading: false,
         // Removed the leading property to remove the back arrow
       ),
       body: Padding(
@@ -27,31 +28,25 @@ class ProfilePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text(
-              'Web Developer',
-              style: TextStyle(
-                color: Colors.grey,
-              ),
-            ),
             const SizedBox(height: 20),
             Expanded(
               child: ListView(
                 children: [
-                  const ProfileOption(
-                    icon: Icons.person,
-                    title: 'User Details',
-                    color: Colors.orange,
-                  ),
-                  const ProfileOption(
+                  ProfileOption(
                     icon: Icons.edit,
                     title: 'Edit Profile',
                     color: Colors.purple,
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, '/editProfile');
+                    },
                   ),
+                  /*
                   const ProfileOption(
                     icon: Icons.lock,
                     title: 'Privacy',
                     color: Colors.yellow,
                   ),
+                   */
                   const ProfileOption(
                     icon: Icons.help,
                     title: 'Help Center',

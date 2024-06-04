@@ -11,7 +11,7 @@ class SignUpPage extends StatelessWidget {
         title: const Text('Create an account✨'),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,15 +52,29 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Checkbox(
-                  value: true,
-                  onChanged: (value) {},
+            const SizedBox(height: 20),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock),
+                labelText: 'Re-enter Password',
+                suffixIcon: const Icon(Icons.visibility_off),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                const Text('Must be at least 8 characters'),
-              ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.lock),
+                labelText: 'Enter phone number',
+                suffixIcon: const Icon(Icons.visibility_off),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -78,6 +92,7 @@ class SignUpPage extends StatelessWidget {
                 child: const Text('Sign Up'),
               ),
             ),
+            /*
             const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
@@ -92,21 +107,8 @@ class SignUpPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.facebook),
-                label: const Text('Sign up with Facebook'),
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ),
-            const Spacer(),
+             */
+            const SizedBox(height: 20), // Adjusted from Spacer to SizedBox
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

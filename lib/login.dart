@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
         title: const Text('Log in to your account✨'),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(  // Added SingleChildScrollView
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.email),
-                labelText: 'Enter your email',
+                labelText: 'Enter your email or username',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -52,7 +52,7 @@ class LoginPage extends StatelessWidget {
                       value: true,
                       onChanged: (value) {},
                     ),
-                    const Text('Remember for 30 days'),
+                    const Text('Remember Me'),
                   ],
                 ),
                 TextButton(
@@ -77,6 +77,7 @@ class LoginPage extends StatelessWidget {
                 child: const Text('Log In'),
               ),
             ),
+            /*
             const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
@@ -91,6 +92,9 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
+             */
+
+            /*
             const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
@@ -105,11 +109,12 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
+             */
+            const SizedBox(height: 20), // Adjusted from Spacer to SizedBox
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Don't have an account? "), //test
+                const Text("Don't have an account? "),
                 TextButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/signup');
