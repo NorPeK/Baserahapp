@@ -13,6 +13,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  bool _obscureText = true;
+
   void _signIn() async {
     try {
       final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -26,6 +28,12 @@ class _LoginPageState extends State<LoginPage> {
         SnackBar(content: Text('Failed to sign in: $e')),
       );
     }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
   @override
@@ -59,11 +67,16 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 20),
             TextField(
               controller: _passwordController,
-              obscureText: true,
+              obscureText: _obscureText,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lock),
                 labelText: 'Password',
-                suffixIcon: const Icon(Icons.visibility_off),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                  ),
+                  onPressed: _togglePasswordVisibility,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -73,17 +86,6 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {
-                        // value == true;
-                      },
-                    ),
-                    const Text('Remember Me'),
-                  ],
-                ),
                 TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/forgetpass');
