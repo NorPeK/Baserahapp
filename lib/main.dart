@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Initialize Firebase for Android with specific options
   Platform.isAndroid
       ? await Firebase.initializeApp(
       options: const FirebaseOptions(
@@ -16,6 +17,7 @@ void main() async {
           appId: 'REMOVED_PROJECT_ID',
           messagingSenderId: 'REMOVED_PROJECT_SENT_ID',
           projectId: 'REMOVED_PROJECT_MESSAGE'))
+  // Initialize Firebase for other platforms
       : await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -41,6 +43,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Widget to determine if the user is authenticated or not
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
@@ -53,12 +56,14 @@ class AuthWrapper extends StatelessWidget {
           final user = snapshot.data;
           return user == null ? const LoginPage() : const HomePage();
         }
-        return const CircularProgressIndicator(); // or some loading indicator
+        // Show a loading indicator while checking the auth state
+        return const CircularProgressIndicator();
       },
     );
   }
 }
 
+// Stateful widget for the home page to manage the selected tab index
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -69,6 +74,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // To track the selected tab
 
+  // Method to handle bottom navigation item taps
   void _onItemTapped(int index) {
     if (index == _selectedIndex) {
       // Do nothing if the selected index is the same as the current index
@@ -134,6 +140,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+// Stateless widget for the categories grid
 class CategoriesGrid extends StatelessWidget {
   const CategoriesGrid({super.key});
 
@@ -159,6 +166,7 @@ class CategoriesGrid extends StatelessWidget {
   }
 }
 
+// Stateless widget for individual category cards
 class SimpleCategoryCard extends StatelessWidget {
   final String title;
   final IconData icon;
