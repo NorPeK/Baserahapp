@@ -1,10 +1,20 @@
+import 'dart:io';
 import 'package:baserah_app/editProfile.dart';
 import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
 import 'package:baserah_app/signup.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Platform.isAndroid ? await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: 'REMOVED_PROJECT_Key',
+          appId: 'REMOVED_PROJECT_ID',
+          messagingSenderId: 'REMOVED_PROJECT_SENT_ID',
+          projectId: 'REMOVED_PROJECT_MESSAGE')
+  ) : await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
