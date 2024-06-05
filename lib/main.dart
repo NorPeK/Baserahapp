@@ -1,11 +1,13 @@
 import 'dart:io';
-import 'package:baserah_app/editProfile.dart';
+import 'package:baserah_app/location.dart';
 import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
 import 'package:baserah_app/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'editProfile.dart';
+import 'logs.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +39,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/signup': (context) => const SignUpPage(),
         '/profile': (context) => const ProfilePage(),
-        '/editProfile': (context) => const editProfilePage(),
+        '/editProfile': (context) => const EditProfilePage(),
+        '/logs': (context) => const LogsPage(),
       },
     );
   }
@@ -152,14 +155,20 @@ class CategoriesGrid extends StatelessWidget {
       mainAxisSpacing: 10,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      children: const [
+      children: [
         SimpleCategoryCard(
           title: 'Click Here to See The User Current Location',
           icon: Icons.not_started_rounded,
+          onTap: () {
+
+          },
         ),
         SimpleCategoryCard(
-          title: 'Click Here to See The logs history',
+          title: 'Click Here to See The Logs History',
           icon: Icons.book,
+          onTap: () {
+            Navigator.pushNamed(context, '/logs');
+          },
         ),
       ],
     );
@@ -170,40 +179,45 @@ class CategoriesGrid extends StatelessWidget {
 class SimpleCategoryCard extends StatelessWidget {
   final String title;
   final IconData icon;
+  final VoidCallback onTap;
 
   const SimpleCategoryCard({
     super.key,
     required this.title,
     required this.icon,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.white,
-              child: Icon(icon, size: 24, color: Colors.black),
-            ),
-          ],
+              const SizedBox(height: 8),
+              CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.white,
+                child: Icon(icon, size: 24, color: Colors.black),
+              ),
+            ],
+          ),
         ),
       ),
     );

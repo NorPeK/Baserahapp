@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class editProfilePage extends StatelessWidget {
-  const editProfilePage({super.key});
+class EditProfilePage extends StatelessWidget {
+  const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Edit profile'),
+        title: const Text('Edit Profile'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(  // Added SingleChildScrollView
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,38 +21,49 @@ class editProfilePage extends StatelessWidget {
               style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 20),
+            const Text(
+              'User email',
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 8),
             TextField(
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.email),
-                labelText: 'User email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
             const SizedBox(height: 20),
+            const Text(
+              'Username',
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 8),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.lock),
-                labelText: 'Username',
+                prefixIcon: const Icon(Icons.person),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
             const SizedBox(height: 20),
+            const Text(
+              'User phone number',
+              style: TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 8),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lock),
-                labelText: 'User phone number',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
             ),
-
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
@@ -69,7 +80,6 @@ class editProfilePage extends StatelessWidget {
                 child: const Text('Save'),
               ),
             ),
-
           ],
         ),
       ),
