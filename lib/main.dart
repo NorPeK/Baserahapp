@@ -6,6 +6,7 @@ import 'package:baserah_app/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'ForgetPass.dart';
 import 'editProfile.dart';
 import 'logs.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/editProfile': (context) => const EditProfilePage(),
         '/logs': (context) => const LogsPage(),
+        '/forgetpass': (context) => const ForgetPass(),
       },
     );
   }

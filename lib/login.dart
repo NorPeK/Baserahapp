@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: _emailController,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.email),
-                labelText: 'Enter your email or username',
+                labelText: 'Enter your email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -76,14 +76,18 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   children: [
                     Checkbox(
-                      value: true,
-                      onChanged: (value) {},
+                      value: false,
+                      onChanged: (value) {
+                        // value == true;
+                      },
                     ),
                     const Text('Remember Me'),
                   ],
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/forgetpass');
+                  },
                   child: const Text('Forgot password'),
                 ),
               ],
