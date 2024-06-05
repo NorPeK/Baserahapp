@@ -34,11 +34,8 @@ class _ForgetPassState extends State<ForgetPass> {
   }
 
   void _verifyCode() {
-    // Here you would normally verify the code with your backend
-    // For the sake of this example, we assume the verification is successful
-    setState(() {
-      _isVerificationSuccessful = true;
-    });
+
+    Navigator.pushReplacementNamed(context, '/login');
   }
 
   void _resetPassword() async {
@@ -107,21 +104,6 @@ class _ForgetPassState extends State<ForgetPass> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Enter the verification code sent to your email.',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: _verificationCodeController,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.code),
-                      labelText: 'Enter verification code',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
@@ -129,11 +111,12 @@ class _ForgetPassState extends State<ForgetPass> {
                       onPressed: _verifyCode,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
+                        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: const Text('Verify Code'),
+                      child: const Text('VERIFICATION CODE HAS BEEN SENT'),
                     ),
                   ),
                 ],
