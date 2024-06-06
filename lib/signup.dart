@@ -19,6 +19,9 @@ class _SignUpPageState extends State<SignUpPage> {
   late String _password;
   late String _phoneNumber;
 
+
+  bool _passwordVisible = false; // Track password visibility
+
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -44,6 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +108,20 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                obscureText: true,
+                obscureText: !_passwordVisible, // Update based on visibility state
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   labelText: 'Password',
-                  suffixIcon: const Icon(Icons.visibility_off),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),

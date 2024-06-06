@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Baserah',
+              'BASERAH',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
