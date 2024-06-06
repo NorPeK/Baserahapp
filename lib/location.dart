@@ -11,7 +11,7 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   double? _latitude;
-  double? _longitude;
+  double? _longitude; //comment
   bool _loading = true;
 
   @override
