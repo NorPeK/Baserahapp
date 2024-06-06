@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LocationPage extends StatefulWidget {
@@ -22,15 +22,13 @@ class _LocationPageState extends State<LocationPage> {
 
   Future<void> _fetchLocation() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
-          .collection('locations')
-          .doc('user_location') // Assuming 'user_location' is the document ID
-          .get();
+      DatabaseReference ref = FirebaseDatabase.instance.ref();
+      DataSnapshot snapshot = await ref.get();
 
       if (snapshot.exists) {
         setState(() {
-          _latitude = snapshot.data()?['latitude'];
-          _longitude = snapshot.data()?['longitude'];
+          _latitude = snapshot.child('current_latitude').value as double?;
+          _longitude = snapshot.child('current_longitude').value as double?;
           _loading = false;
         });
       } else {
