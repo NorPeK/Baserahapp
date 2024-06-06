@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/editProfile': (context) => const EditProfilePage(),
         '/logs': (context) => const LogsPage(),
         '/forgetpass': (context) => const ForgetPass(),
+        '/location': (context) => const LocationPage(), // Add this line
       },
     );
   }
@@ -162,7 +163,7 @@ class CategoriesGrid extends StatelessWidget {
           title: 'Click Here to See The User Current Location',
           icon: Icons.not_started_rounded,
           onTap: () {
-
+            Navigator.pushNamed(context, '/location');
           },
         ),
         SimpleCategoryCard(
