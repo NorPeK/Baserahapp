@@ -1,38 +1,45 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class LogsPage extends StatelessWidget {
+class LogsPage extends StatefulWidget {
   const LogsPage({super.key});
+
+  @override
+  _LogsPageState createState() => _LogsPageState();
+}
+
+class _LogsPageState extends State<LogsPage> {
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  Map<String, dynamic> _logs = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchLogs();
+  }
+
+  void _fetchLogs() async {
+    DatabaseEvent event = await _databaseReference.once();
+    setState(() {
+      _logs = Map<String, dynamic>.from(event.snapshot.value as Map);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Location Logs'),
+        title: const Text('Logs History'),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('logs').snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No logs found'));
-          }
-          return ListView(
-            children: snapshot.data!.docs.map((doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              final latitude = data['latitude'] ?? 'Unknown';
-              final longitude = data['longitude'] ?? 'Unknown';
-              final timestamp = data['timestamp'] != null
-                  ? (data['timestamp'] as Timestamp).toDate().toString()
-                  : 'Unknown';
-
-              return ListTile(
-                title: Text('Lat: $latitude, Lon: $longitude'),
-                subtitle: Text('Timestamp: $timestamp'),
-              );
-            }).toList(),
+      body: _logs.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: _logs.length,
+        itemBuilder: (context, index) {
+          String key = _logs.keys.elementAt(index);
+          return ListTile(
+            title: Text(key),
+            subtitle: Text(_logs[key].toString()),
           );
         },
       ),
