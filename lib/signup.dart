@@ -19,14 +19,14 @@ class _SignUpPageState extends State<SignUpPage> {
   late String _password;
   late String _phoneNumber;
 
-
   bool _passwordVisible = false; // Track password visibility
 
   Future<void> _signUp() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        UserCredential userCredential =
+            await _auth.createUserWithEmailAndPassword(
           email: _email,
           password: _password,
         );
@@ -43,11 +43,12 @@ class _SignUpPageState extends State<SignUpPage> {
         }
       } catch (e) {
         print(e);
-        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to sign up: $e')),
+        );
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +101,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your email';
                   }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
                   return null;
                 },
                 onSaved: (value) {
@@ -108,13 +112,16 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 20),
               TextFormField(
-                obscureText: !_passwordVisible, // Update based on visibility state
+                obscureText:
+                    !_passwordVisible, // Update based on visibility state
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock),
                   labelText: 'Password',
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                      _passwordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
@@ -129,6 +136,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters long';
                   }
                   return null;
                 },
@@ -148,6 +158,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your phone number';
+                  }
+                  if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                    return 'Please enter a valid phone number';
                   }
                   return null;
                 },
