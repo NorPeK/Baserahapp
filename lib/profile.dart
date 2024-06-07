@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   Future<Map<String, dynamic>> _fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -15,6 +23,36 @@ class ProfilePage extends StatelessWidget {
       return userDoc.data() as Map<String, dynamic>;
     }
     return {};
+  }
+
+  Future<void> _uploadProfilePicture() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        try {
+          Reference storageReference = FirebaseStorage.instance
+              .ref()
+              .child('profilePictures/${user.uid}.jpg');
+          UploadTask uploadTask = storageReference.putFile(file);
+          await uploadTask;
+          String downloadUrl = await storageReference.getDownloadURL();
+
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .update({'profilePhotoUrl': downloadUrl});
+
+          setState(() {});
+        } catch (e) {
+          print('Error uploading profile picture: $e');
+        }
+      }
+    }
   }
 
   @override
@@ -40,10 +78,22 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const CircleAvatar(
-                    radius: 40,
-                    backgroundImage:
-                        AssetImage('assets/profile.jpg'), // Placeholder image
+                  GestureDetector(
+                    onTap: _uploadProfilePicture,
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundImage: userData['profilePhotoUrl'] != null
+                          ? NetworkImage(userData['profilePhotoUrl'])
+                          : const AssetImage('assets/profile.jpg')
+                              as ImageProvider,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Text(

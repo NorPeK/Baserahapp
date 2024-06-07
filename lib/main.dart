@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'ForgetPass.dart';
 import 'editProfile.dart';
 import 'logs.dart';
+import 'splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,9 +35,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Baserah',
       theme: ThemeData.dark(),
-      home: const AuthWrapper(),
-      initialRoute: '/login',
+      home: const SplashScreen(),
+      initialRoute: '/splash',
       routes: {
+        '/splash': (context) => const SplashScreen(),
+        '/authWrapper': (context) => const AuthWrapper(),
         '/login': (context) => const LoginPage(),
         '/home': (context) => const HomePage(),
         '/signup': (context) => const SignUpPage(),
