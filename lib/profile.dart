@@ -8,8 +8,10 @@ class ProfilePage extends StatelessWidget {
   Future<Map<String, dynamic>> _fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc =
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       return userDoc.data() as Map<String, dynamic>;
     }
     return {};
@@ -40,7 +42,8 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   const CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage('assets/profile.jpg'), // Placeholder image
+                    backgroundImage:
+                        AssetImage('assets/profile.jpg'), // Placeholder image
                   ),
                   const SizedBox(height: 10),
                   Text(
@@ -59,13 +62,18 @@ class ProfilePage extends StatelessWidget {
                           title: 'Edit Profile',
                           color: Colors.deepPurple,
                           onTap: () {
-                            Navigator.pushReplacementNamed(context, '/editProfile');
+                            Navigator.pushReplacementNamed(
+                                context, '/editProfile');
                           },
                         ),
-                        const ProfileOption(
+                        ProfileOption(
                           icon: Icons.help,
                           title: 'Help Center',
                           color: Colors.deepPurple,
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/helpcenter');
+                          },
                         ),
                         ProfileOption(
                           icon: Icons.logout,

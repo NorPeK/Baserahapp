@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:baserah_app/HelpCenterPage.dart';
 import 'package:baserah_app/location.dart';
 import 'package:baserah_app/login.dart';
 import 'package:baserah_app/profile.dart';
@@ -15,12 +16,12 @@ void main() async {
   // Initialize Firebase for Android with specific options
   Platform.isAndroid
       ? await Firebase.initializeApp(
-      options: const FirebaseOptions(
-          apiKey: 'REMOVED_PROJECT_Key',
-          appId: 'REMOVED_PROJECT_ID',
-          messagingSenderId: 'REMOVED_PROJECT_SENT_ID',
-          projectId: 'REMOVED_PROJECT_MESSAGE'))
-  // Initialize Firebase for other platforms
+          options: const FirebaseOptions(
+              apiKey: 'REMOVED_PROJECT_Key',
+              appId: 'REMOVED_PROJECT_ID',
+              messagingSenderId: 'REMOVED_PROJECT_SENT_ID',
+              projectId: 'REMOVED_PROJECT_MESSAGE'))
+      // Initialize Firebase for other platforms
       : await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/logs': (context) => const LogsPage(),
         '/forgetpass': (context) => const ForgetPass(),
         '/location': (context) => const LocationPage(), // Add this line
+        '/helpcenter': (context) => const HelpCenterPage(), // Add this line
       },
     );
   }
@@ -104,7 +106,8 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Home'),
         actions: const [
           CircleAvatar(
-            backgroundImage: AssetImage('assets/profile.jpg'), // Ensure to add a placeholder image
+            backgroundImage: AssetImage(
+                'assets/profile.jpg'), // Ensure to add a placeholder image
           ),
         ],
       ),
