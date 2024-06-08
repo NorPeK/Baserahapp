@@ -7,6 +7,7 @@ import 'package:baserah_app/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'ForgetPass.dart';
 import 'editProfile.dart';
 import 'logs.dart';
@@ -47,14 +48,13 @@ class MyApp extends StatelessWidget {
         '/editProfile': (context) => const EditProfilePage(),
         '/logs': (context) => const LogsPage(),
         '/forgetpass': (context) => const ForgetPass(),
-        '/location': (context) => const LocationPage(), // Add this line
-        '/helpcenter': (context) => const HelpCenterPage(), // Add this line
+        '/location': (context) => const LocationPage(),
+        '/helpcenter': (context) => const HelpCenterPage(),
       },
     );
   }
 }
 
-// Widget to determine if the user is authenticated or not
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
@@ -67,14 +67,12 @@ class AuthWrapper extends StatelessWidget {
           final user = snapshot.data;
           return user == null ? const LoginPage() : const HomePage();
         }
-        // Show a loading indicator while checking the auth state
         return const CircularProgressIndicator();
       },
     );
   }
 }
 
-// Stateful widget for the home page to manage the selected tab index
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -83,12 +81,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // To track the selected tab
+  int _selectedIndex = 0;
+  String _userName = "Loading..."; // Initial placeholder
 
-  // Method to handle bottom navigation item taps
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserName();
+  }
+
+  void _fetchUserName() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      setState(() {
+        _userName = userDoc['name'] ?? 'No Name';
+      });
+    }
+  }
+
   void _onItemTapped(int index) {
     if (index == _selectedIndex) {
-      // Do nothing if the selected index is the same as the current index
       return;
     }
     setState(() {
@@ -106,31 +122,36 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Home'),
+        title: const Padding(
+          padding: EdgeInsets.only(top: 30),
+          child: Text(
+            'Baserah',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ),
+        ),
         actions: const [
           CircleAvatar(
-            backgroundImage: AssetImage(
-                'assets/profile.jpg'), // Ensure to add a placeholder image
+            backgroundImage: AssetImage('assets/profile.jpg'),
           ),
         ],
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 20),
             Text(
-              'BASERAH',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
+              'Hello, $_userName',
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
-            SizedBox(height: 20),
-            SizedBox(height: 20),
-            SizedBox(height: 20),
-            SizedBox(height: 10),
-            CategoriesGrid(),
+            const SizedBox(height: 5),
+            const Text(
+              'Good morning',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(height: 20),
+            const CategoriesGrid(),
           ],
         ),
       ),
@@ -160,25 +181,28 @@ class CategoriesGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 2,
-      crossAxisSpacing: 10,
-      mainAxisSpacing: 10,
+      crossAxisSpacing: 15, // Keep horizontal spacing as desired
+      mainAxisSpacing: 20, // Increase vertical spacing
+      childAspectRatio:
+          0.4, // Adjust this to make cards taller (width to height ratio)
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: [
         SimpleCategoryCard(
-          title: 'Click Here to See The User Current Location',
-          icon: Icons.not_started_rounded,
+          title: 'Location',
+          icon: Icons.location_on,
           onTap: () {
             Navigator.pushNamed(context, '/location');
           },
         ),
         SimpleCategoryCard(
-          title: 'Click Here to See The Logs History',
-          icon: Icons.book,
+          title: 'Logs History',
+          icon: Icons.history,
           onTap: () {
             Navigator.pushNamed(context, '/logs');
           },
         ),
+        // Add more cards as needed
       ],
     );
   }
@@ -207,25 +231,27 @@ class SimpleCategoryCard extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+          child: SizedBox(
+            height: 180, // Set the desired minimum height here
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24, // Increase font size
+                    fontWeight: FontWeight.bold, // Make text bold
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              CircleAvatar(
-                radius: 20,
-                backgroundColor: Colors.white,
-                child: Icon(icon, size: 24, color: Colors.black),
-              ),
-            ],
+                const SizedBox(height: 20),
+                CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.white,
+                  child: Icon(icon, size: 70, color: Colors.black),
+                ),
+              ],
+            ),
           ),
         ),
       ),

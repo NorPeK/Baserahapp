@@ -11,7 +11,7 @@ class LocationPage extends StatefulWidget {
 
 class _LocationPageState extends State<LocationPage> {
   double? _latitude;
-  double? _longitude; //comment
+  double? _longitude;
   bool _loading = true;
 
   @override
@@ -51,7 +51,8 @@ class _LocationPageState extends State<LocationPage> {
 
   Future<void> _openMap() async {
     if (_latitude != null && _longitude != null) {
-      final url = 'https://www.google.com/maps/search/?api=1&query=$_latitude,$_longitude';
+      final url =
+          'https://www.google.com/maps/search/?api=1&query=$_latitude,$_longitude';
       if (await canLaunch(url)) {
         await launch(url);
       } else {
@@ -71,20 +72,69 @@ class _LocationPageState extends State<LocationPage> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (_latitude != null && _longitude != null) ...[
+                    _buildLocationCard(),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: ElevatedButton.icon(
+                        onPressed: _openMap,
+                        icon: const Icon(Icons.map),
+                        label: const Text('Open in Google Maps'),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 24.0,
+                            vertical: 12.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ] else
+                    const Center(
+                      child: Text(
+                        'Location data is not available.',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+    );
+  }
+
+  Widget _buildLocationCard() {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (_latitude != null && _longitude != null) ...[
-              Text('Latitude: $_latitude'),
-              Text('Longitude: $_longitude'),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _openMap,
-                child: const Text('Open in Google Maps'),
+            const Text(
+              'Current Location',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
               ),
-            ] else
-              const Text('Location data is not available.'),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Latitude: $_latitude',
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            Text(
+              'Longitude: $_longitude',
+              style: const TextStyle(fontSize: 16.0),
+            ),
           ],
         ),
       ),
