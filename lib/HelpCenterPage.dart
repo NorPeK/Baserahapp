@@ -41,7 +41,7 @@ class HelpCenterPage extends StatelessWidget {
             } else if (index == 2) {
               return const HelpCenterBox(
                 name: 'Nour-Allah Bek',
-                email: '2200006461@iau.edu.sa',
+                email: 'norpekbusiness@hotmail.com',
                 phoneNumber: '0534479162',
               );
             } else if (index == 3) {
