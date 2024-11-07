@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'ForgetPass.dart';
 import 'editProfile.dart';
 import 'logs.dart';
@@ -15,16 +16,25 @@ import 'splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize Firebase for Android with specific options
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: const FirebaseOptions(
-              apiKey: 'REMOVED_PROJECT_Key',
-              appId: 'REMOVED_PROJECT_ID',
-              messagingSenderId: 'REMOVED_PROJECT_SENT_ID',
-              projectId: 'REMOVED_PROJECT_MESSAGE'))
-      // Initialize Firebase for other platforms
-      : await Firebase.initializeApp();
+
+  // Load environment variables
+  await dotenv.load();
+
+  // Initialize Firebase with environment variables if running on Android
+  if (Platform.isAndroid) {
+    await Firebase.initializeApp(
+      options: FirebaseOptions(
+        apiKey: dotenv.env['FIREBASE_API_KEY']!,
+        appId: dotenv.env['FIREBASE_APP_ID']!,
+        messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID']!,
+        projectId: dotenv.env['FIREBASE_PROJECT_ID']!,
+      ),
+    );
+  } else {
+    // Initialize Firebase for other platforms
+    await Firebase.initializeApp();
+  }
+
   runApp(const MyApp());
 }
 
