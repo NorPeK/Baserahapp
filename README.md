@@ -13,7 +13,7 @@ Baserah is a mobile application designed to support the Baserah Smart Stick, an 
 
 ---
 
-### Repository
+### Design
 Find the Figma design for our application:
 [Figma - Baserah App](https://www.figma.com/design/2FFafApSXvaBu9DAKr01sr/Baserah-App?node-id=0-1&t=iGGHBvgdJgOJyDqZ-1)
 
