@@ -1,16 +1,22 @@
-# baserah_app
+# Baserah: Mobile Application for the Smart Stick
 
-A new Flutter project.
+Baserah is a mobile application designed to support the Baserah Smart Stick, an assistive device that enhances navigation and safety for visually impaired individuals.
 
-## Getting Started
+## Key Features
+- **Real-time GPS Tracking**: Allows caregivers to monitor the user's location for enhanced safety.
+- **Bluetooth Connectivity**: Seamlessly interfaces with the Baserah Smart Stick for data transfer.
+- **History Log**: Tracks previous alerts and location data for analysis and monitoring.
 
-This project is a starting point for a Flutter application.
+## Technologies Used
+- **Flutter**: Cross-platform development for iOS and Android.
+- **Dart**: Programming language for building a smooth and responsive application.
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Repository
+Find the Figma design for our application:
+[Figma - Baserah App](https://www.figma.com/design/2FFafApSXvaBu9DAKr01sr/Baserah-App?node-id=0-1&t=iGGHBvgdJgOJyDqZ-1)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+Feel free to contribute or provide feedback to improve the app!
